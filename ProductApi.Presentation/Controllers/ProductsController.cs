@@ -49,7 +49,7 @@ namespace ProductApi.Presentation.Controllers
             return newProduct is not null ? Ok(newProduct) : BadRequest(newProduct);
         }
 
-        [HttpPut()]
+        [HttpPut]
         public async Task<ActionResult<ProductDTO>> UpdateProduct(ProductDTO product)
         {
             if (!ModelState.IsValid)
@@ -64,7 +64,7 @@ namespace ProductApi.Presentation.Controllers
             return updatedProduct is not null ? Ok(updatedProduct) : BadRequest(updatedProduct);
         }
 
-        [HttpDelete()]
+        [HttpDelete]
         public async Task<ActionResult<ProductDTO>> DeleteProduct(ProductDTO product)
         {
             if (!ModelState.IsValid)
@@ -77,6 +77,6 @@ namespace ProductApi.Presentation.Controllers
                 return NotFound("Product not found");
             }
             return deletedProduct is not null ? Ok(deletedProduct) : BadRequest(deletedProduct);
-        }
+        }   
     }
 }
