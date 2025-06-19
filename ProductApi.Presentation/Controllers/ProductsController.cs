@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProductApi.Application.DTOs;
 using ProductApi.Application.DTOs.Conversion;
@@ -8,6 +9,7 @@ namespace ProductApi.Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class ProductsController(IProduct productInterface) : ControllerBase
     {
         [HttpGet]
@@ -35,6 +37,7 @@ namespace ProductApi.Presentation.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ProductDTO>> CreateProduct(ProductDTO product)
         {
             if (!ModelState.IsValid)
@@ -50,6 +53,7 @@ namespace ProductApi.Presentation.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ProductDTO>> UpdateProduct(ProductDTO product)
         {
             if (!ModelState.IsValid)
@@ -65,6 +69,7 @@ namespace ProductApi.Presentation.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ProductDTO>> DeleteProduct(ProductDTO product)
         {
             if (!ModelState.IsValid)
@@ -77,6 +82,6 @@ namespace ProductApi.Presentation.Controllers
                 return NotFound("Product not found");
             }
             return deletedProduct is not null ? Ok(deletedProduct) : BadRequest(deletedProduct);
-        }   
+        }
     }
 }
